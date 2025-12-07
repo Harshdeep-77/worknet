@@ -1,0 +1,32 @@
+# Node modules
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Uploads
+backend/uploads/
+
+# Environment files
+.env
+backend/.env
+frontend/.env
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+
+# Build
+backend/dist/
+frontend/dist/
+
+# Logs
+*.log
+
+# System
+.DS_Store
+Thumbs.db
+
+# Vercel / Netlify
+.vercel/
+.netlify/
