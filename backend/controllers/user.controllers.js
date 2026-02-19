@@ -46,11 +46,14 @@ export const register = async (req, res) => {
     if (user) return res.status(400).json({ message: "user already exist" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const token = crypto.randomBytes(32).toString("hex");
+
     const newUser = new User({
       name,
       email,
       password: hashedPassword,
       username,
+      token,
     });
 
     await newUser.save();
@@ -58,7 +61,7 @@ export const register = async (req, res) => {
     const profile = new Profile({ userId: newUser._id });
     await profile.save();
 
-    return res.json({ message: "user created" });
+    return res.json({ message: "user created", token });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -144,7 +147,7 @@ export const getUserAndProfile = async (req, res) => {
     }
     const userProfile = await Profile.findOne({ userId: user._id }).populate(
       "userId",
-      "name username email profilePicture"
+      "name username email profilePicture",
     );
     return res.json(userProfile);
   } catch (error) {
@@ -180,7 +183,7 @@ export const getAllUserProfile = async (req, res) => {
   try {
     const profile = await Profile.find().populate(
       "userId",
-      "name username email profilePicture"
+      "name username email profilePicture",
     );
     return res.json({ profile });
   } catch (error) {
@@ -201,7 +204,7 @@ export const downloadProfile = async (req, res) => {
 
     const userProfile = await Profile.findOne({ userId: user_id }).populate(
       "userId",
-      "name username email profilePicture"
+      "name username email profilePicture",
     );
 
     if (!userProfile) {
