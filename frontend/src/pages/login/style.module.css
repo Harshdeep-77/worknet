@@ -1,55 +1,164 @@
- .cardContainer {
-     display: flex;
-     height: 80vh;
-     border: 1px solid red;
-     display: flex;
-     border-radius: 10px;
-     width: 80vw;
-     background: white;
-     box-shadow: 10px 10px 10px rgba(173, 173, 173);
- }
+.cardContainer {
+  display: flex;
+  height: 80vh;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  border-radius: 10px;
+  width: 80vw;
+  background: white;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+}
 
- .cardContainer_left {
-     flex: 0.6;
-     padding: 2rem;
-     text-align: center;
- }
+.cardContainer_left {
+  flex: 0.6;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
- .inputFeild {
-     padding-inline: 1rem;
-     padding-block: 0.8rem;
-     border: 1px solid #ccc;
-     outline: none;
-     border-radius: 5px;
-     width: 100%;
- }
+.inputFeild {
+  padding-inline: 1rem;
+  padding-block: 0.8rem;
+  border: 1px solid #ccc;
+  outline: none;
+  border-radius: 5px;
+  width: 100%;
+  transition: border-color 0.2s;
+}
 
- .inputRow {
-     display: flex;
-     width: fit-content;
-     flex-direction: row;
-     gap: 1rem;
- }
+.inputFeild:focus {
+  border-color: #4f46e5;
+}
 
+.inputRow {
+  display: flex;
+  width: fit-content;
+  flex-direction: row;
+  gap: 1rem;
+}
 
- .cardContainer_right {
-     flex: 0.4;
-     background: #f5f5f5;
-     padding: 2rem;
-     display: flex;
-     align-items: center;
-     text-align: center;
- }
- .inputContainer {
-     display: flex;
-     flex-direction: column;
-     align-items: center;
-     justify-content: center;
-     max-width: 400px;
-     margin:0 auto;
-     gap: 1rem;
- }
- .btn{
-    padding-left: 10px;
-    padding-right: 10px;
- }
+.cardContainer_right {
+  flex: 0.4;
+  background: #f5f5f5;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border-radius: 0 10px 10px 0;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0 auto;
+  gap: 1rem;
+}
+
+.btn {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.submitButton {
+  padding: 12px 40px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.submitButton:hover {
+  background: #4338ca;
+}
+
+/* Success Message Styles */
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.successIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: white;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleIn 0.4s ease-out;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.successTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.successMessage {
+  font-size: 1rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.successButton {
+  padding: 12px 40px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #4f46e5;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+  margin-top: 0.5rem;
+}
+
+.successButton:hover {
+  background: #4338ca;
+}
+
+.toggleText {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+.toggleLink {
+  color: #4f46e5;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.toggleLink:hover {
+  text-decoration: underline;
+}

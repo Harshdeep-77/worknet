@@ -33,14 +33,7 @@ export const registerUser = createAsyncThunk(
         email: user.email,
         name: user.name,
       });
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-      } else {
-        return thunkAPI.rejectWithValue({
-          message: "Token not found",
-        });
-      }
-      return thunkAPI.fulfillWithValue(response.data.token);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }

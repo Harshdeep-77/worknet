@@ -4,11 +4,11 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import style from "./style.module.css";
-import { registerUser } from "../../config/redux/action/authAction";
+import { registerUser, loginUser } from "../../config/redux/action/authAction";
 
 function loginScreen() {
   const authState = useSelector((state) => state.auth);
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const router = useRouter();
   const [isLoginMethod, setIsLoginMethod] = useState(false);
   const [userName, setUserName] = useState("");
@@ -17,13 +17,23 @@ function loginScreen() {
   const [name, setName] = useState("");
 
   useEffect(() => {
-    if (authState.authenticated) {
+    if (authState.isLoggedIn) {
       router.push("/dashboard");
     }
   }, [authState]);
 
   const handleRegister = () => {
-    dispath(registerUser({ userName, email, password, name }));
+    dispatch(registerUser({ userName, email, password, name }));
+  };
+
+  const handleLogin = () => {
+    dispatch(loginUser({ email, password }));
+  };
+
+  const switchToLogin = () => {
+    setIsLoginMethod(true);
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -32,55 +42,99 @@ function loginScreen() {
         <div className={style.cardContainer}>
           {/* LEFT */}
           <div className={style.cardContainer_left}>
-            <p className="text-[2rem] font-bold">
-              {isLoginMethod ? "Login" : "Sign Up"}
-            </p>
-            {authState.isError && (
-              <p className="text-red-500 text-sm mt-2">
-                {authState.message?.message || authState.message}
-              </p>
+            {/* Registration Success Message */}
+            {authState.isRegistered && !isLoginMethod ? (
+              <div className={style.successContainer}>
+                <div className={style.successIcon}>✓</div>
+                <h2 className={style.successTitle}>Registration Successful!</h2>
+                <p className={style.successMessage}>
+                  You are registered successfully. Now login to continue.
+                </p>
+                <button onClick={switchToLogin} className={style.successButton}>
+                  Go to Login
+                </button>
+              </div>
+            ) : (
+              <>
+                <p className="text-[2rem] font-bold">
+                  {isLoginMethod ? "Login" : "Sign Up"}
+                </p>
+
+                {authState.isError && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {authState.message?.message || authState.message}
+                  </p>
+                )}
+
+                {authState.isLoading && (
+                  <p className="text-blue-500 text-sm mt-2">
+                    {authState.message}
+                  </p>
+                )}
+
+                <div className={style.inputContainer}>
+                  {/* Show username & name fields only for Sign Up */}
+                  {!isLoginMethod && (
+                    <div className={style.inputRow}>
+                      <input
+                        onChange={(e) => setUserName(e.target.value)}
+                        className={style.inputFeild}
+                        type="text"
+                        placeholder="Username"
+                        value={userName}
+                      />
+                      <input
+                        onChange={(e) => setName(e.target.value)}
+                        className={style.inputFeild}
+                        type="text"
+                        placeholder="Name"
+                        value={name}
+                      />
+                    </div>
+                  )}
+
+                  <input
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={style.inputFeild}
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                  />
+                  <input
+                    onChange={(e) => setPassword(e.target.value)}
+                    className={style.inputFeild}
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                  />
+
+                  <div
+                    onClick={() => {
+                      if (isLoginMethod) {
+                        handleLogin();
+                      } else {
+                        handleRegister();
+                      }
+                    }}
+                    className={style.submitButton}
+                  >
+                    <p>{isLoginMethod ? "Login" : "Sign Up"}</p>
+                  </div>
+
+                  <p className={style.toggleText}>
+                    {isLoginMethod
+                      ? "Don't have an account? "
+                      : "Already have an account? "}
+                    <span
+                      onClick={() => setIsLoginMethod(!isLoginMethod)}
+                      className={style.toggleLink}
+                    >
+                      {isLoginMethod ? "Sign Up" : "Login"}
+                    </span>
+                  </p>
+                </div>
+              </>
             )}
-
-            <div className={style.inputContainer}>
-              <div className={style.inputRow}>
-                <input
-                  onChange={(e) => setUserName(e.target.value)}
-                  className={style.inputFeild}
-                  type="text"
-                  placeholder="Username"
-                />
-                <input
-                  onChange={(e) => setName(e.target.value)}
-                  className={style.inputFeild}
-                  type="text"
-                  placeholder="Name "
-                />
-              </div>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                className={style.inputFeild}
-                type="email"
-                placeholder="Email"
-              />
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                className={style.inputFeild}
-                type="password"
-                placeholder="Password"
-              />
-
-              <div
-                onClick={() => {
-                  if (isLoginMethod) {
-                  } else {
-                    handleRegister();
-                  }
-                }}
-                className="p-[40px] border-[1px] border-silver rounded-[5px]   cursor-pointer bg-gray-200"
-              >
-                <p> {isLoginMethod ? "Login" : "Sign Up"}</p>
-              </div>
-            </div>
           </div>
 
           {/* RIGHT */}
